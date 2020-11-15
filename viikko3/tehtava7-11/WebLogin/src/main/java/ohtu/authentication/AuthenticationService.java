@@ -33,11 +33,23 @@ public class AuthenticationService {
         if (username.length()<3 ) {
             status.addError("username should have at least 3 characters");
         }
-/*
-        if (!username.matches("[a-zA-Z]+")) {
-            status.addError("xx");
+
+        if (password.length()<8 ) {
+            status.addError("password should have at least 8 characters");
         }
-*/
+
+        if (password.matches("[a-zA-Z]+")) {
+            status.addError("password should not only be letters");
+        }
+
+        if (!username.matches("[a-z]+")) {
+            status.addError("username should be only small letters");
+        }
+
+        if (!password.matches(passwordConfirmation)) {
+            status.addError("password and password confirmation do not match");
+        }
+
         if (status.isOk()) {
             userDao.add(new User(username, password));
         }

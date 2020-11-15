@@ -72,6 +72,16 @@ public class Stepdefs {
         createUserWith(username, password);
     }
 
+    @When("a valid username {string} and a too short password {string} and matching password confirmation are entered")
+    public void validUsernameAndTooShortPasswordAndMatchingPasswordConfirmationAreEntered(String username, String password) {
+        createUserWith(username, password);
+    }
+
+    @When("a valid username {string} and password {string} and not matching password {string} confirmation are entered")
+    public void validUsernameAndPasswordAndNotMatchingPasswordConfirmationAreEntered(String username, String password1, String password2) {
+        createUserWithNonMatchingPassword(username, password1, password2);
+    }
+
     @Then("a new user is created")
     public void systemWillRespondWelcome() {
         pageHasContent("Welcome to Ohtu Application!");
@@ -111,6 +121,18 @@ public class Stepdefs {
         element.sendKeys(password);
         element = driver.findElement(By.name("passwordConfirmation"));
         element.sendKeys(password);
+        element = driver.findElement(By.name("signup"));
+        element.submit();  
+    }
+
+    private void createUserWithNonMatchingPassword(String username, String password1, String password2) {
+        assertTrue(driver.getPageSource().contains("Create username and give password"));
+        WebElement element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password1);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(password2);
         element = driver.findElement(By.name("signup"));
         element.submit();  
     } 
