@@ -1,9 +1,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'jacoco'
 }
 
 repositories {
+    mavenCentral()
     jcenter()
 }
 
@@ -23,4 +25,15 @@ application {
 
 run {
     standardInput = System.in
+}
+
+jacoco {
+    toolVersion = "0.8.6"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
 }
