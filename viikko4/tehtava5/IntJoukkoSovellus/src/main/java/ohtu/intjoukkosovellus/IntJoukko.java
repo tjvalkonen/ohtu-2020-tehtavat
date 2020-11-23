@@ -5,7 +5,8 @@ public class IntJoukko {
 
     private int[] joukkoTaulu; //  = new int[2];      // Joukon luvut säilytetään taulukon alkupäässä. 
     private int alkioidenMaara = 0;    // Tyhjässä joukossa alkioiden_määrä on nolla. 
-
+    private int lukuKohdassa;
+    
     public IntJoukko() {
         joukkoTaulu  = new int[1];
     }
@@ -24,19 +25,21 @@ public class IntJoukko {
         }
         joukkoTaulu = new int[kapasiteetti];
     }
+    
+    void lisaaTauluunTyhja() {
+        if (alkioidenMaara % joukkoTaulu.length == 0) {             
+            int[] apuJoukkoTaulu; // = new int[joukkoTaulu.length];           
+            apuJoukkoTaulu = joukkoTaulu;
+            joukkoTaulu = new int[alkioidenMaara + 1];
+            kopioiTaulukko(apuJoukkoTaulu, joukkoTaulu);
+        }
+    }
 
     public boolean lisaa(int luku) {
-
         if (!kuuluuJoukkoon(luku)) {
             joukkoTaulu[alkioidenMaara] = luku;
-            alkioidenMaara++;
-            
-            if (alkioidenMaara % joukkoTaulu.length == 0) {             
-                int[] apuJoukkoTaulu; // = new int[joukkoTaulu.length];           
-                apuJoukkoTaulu = joukkoTaulu;
-                joukkoTaulu = new int[alkioidenMaara + 1];
-                kopioiTaulukko(apuJoukkoTaulu, joukkoTaulu);
-            }
+            alkioidenMaara++;         
+            lisaaTauluunTyhja();
             return true;
         }
         return false;
@@ -45,27 +48,24 @@ public class IntJoukko {
     public boolean kuuluuJoukkoon(int luku) {
         for (int i = 0; i < alkioidenMaara; i++) { // joukkoTaulu.length  
             if (luku == joukkoTaulu[i]) {
+                lukuKohdassa = i;
                 return true;
             }
         }
         return false;
     }
+    
+    void siirraLoppuJoukkoTaulussa() {
+        for (int j = lukuKohdassa; j < alkioidenMaara - 1; j++) { // joukkoTaulu.length
+            int apu = joukkoTaulu[j];
+            joukkoTaulu[j] = joukkoTaulu[j + 1];
+            joukkoTaulu[j + 1] = apu;
+        }
+    }
 
     public boolean poista(int luku) {
         if (kuuluuJoukkoon(luku)) {
-            int kohta = 0; 
-            for (int i = 0; i < alkioidenMaara; i++) { //   joukkoTaulu.length
-                if (luku == joukkoTaulu[i]) {
-                    kohta = i; //siis luku löytyy tuosta kohdasta :D
-                    joukkoTaulu[kohta] = 0;
-                    break;
-                }
-            }
-            for (int j = kohta; j < alkioidenMaara - 1; j++) { // joukkoTaulu.length
-                int apu = joukkoTaulu[j];
-                joukkoTaulu[j] = joukkoTaulu[j + 1];
-                joukkoTaulu[j + 1] = apu;
-            }
+            siirraLoppuJoukkoTaulussa();
             alkioidenMaara--;
             return true;
         }
@@ -112,6 +112,7 @@ public class IntJoukko {
         if(joukkoTaulu.length > i && i >= 0) {
             return joukkoTaulu[i];            
         }
+        // kyseenalainen palautus alla
         return 0;
     }
 
