@@ -27,8 +27,10 @@ public class Tapahtumankuuntelija implements EventHandler {
         
         if (event.getTarget() != undo) {
             Komento komento = this.komennot.get((Button)event.getTarget());
-            this.edellinen = komento;
-            komento.suorita();
+            if (!komento.syotekentta.getText().isEmpty() || komento.nollaa.isArmed()) {
+                this.edellinen = komento;
+                komento.suorita();
+            }
         } else {
             this.edellinen.peru();
             this.edellinen = null;
@@ -86,7 +88,7 @@ public class Tapahtumankuuntelija implements EventHandler {
 
             int arvo = 0;
             try {
-                arvo = Integer.parseInt(edellinen.syotekentta.getText());
+                arvo = Integer.parseInt(syotekentta.getText());
             } catch (Exception e) {
             }
             sovellus.plus(arvo);          
