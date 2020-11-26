@@ -31,7 +31,49 @@ public abstract class Komento {
         this.sovellus = sovellus;
     }
     
-    public abstract void suorita();
+    public void suorita() {
+        laske();
+        
+        try {
+            edellinenTuloskentta = Integer.parseInt(tuloskentta.getText());
+            } catch (Exception e) {
+            }
+        try {
+            edellinenSyotekentta = Integer.parseInt(syotekentta.getText());
+            } catch (Exception e) {
+            }
+
+        int laskunTulos = sovellus.tulos();
+        
+        syotekentta.setText("");
+        tuloskentta.setText("" + sovellus.tulos());
+        
+        if ( laskunTulos==0) {
+            nollaa.disableProperty().set(true);
+        } else {
+            nollaa.disableProperty().set(false);
+        }
+        undo.disableProperty().set(false);
+    }
     
-    public abstract void peru();
+    public void peru () {
+        peruKomento();
+        
+        int laskunTulos = sovellus.tulos();
+        
+        syotekentta.setText("");
+        tuloskentta.setText("" + sovellus.tulos());
+        
+        if ( laskunTulos==0) {
+            nollaa.disableProperty().set(true);
+        } else {
+            nollaa.disableProperty().set(false);
+        }
+
+        undo.disableProperty().set(true);
+    }
+    
+    public abstract void laske();
+    
+    public abstract void peruKomento();
 }
