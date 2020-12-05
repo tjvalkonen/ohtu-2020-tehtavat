@@ -32,7 +32,7 @@ public class Main {
         for (Player player : stats.matches(m2)) {
             System.out.println(player);
         }
-        System.out.println("---M3---");
+        System.out.println("---M3-Or-");
         Matcher m3 = new Or(new HasAtLeast(40, "goals"),
                             new HasAtLeast(60, "assists")
         );  
@@ -40,7 +40,8 @@ public class Main {
         for (Player player : stats.matches(m3)) {
             System.out.println(player);
         }
-        System.out.println("---M4---");
+
+        System.out.println("---M4-Or--");
         Matcher m4 = new And(new HasAtLeast(50, "points"),
                      new Or( 
                          new PlaysIn("NYR"),
@@ -51,7 +52,7 @@ public class Main {
         for (Player player : stats.matches(m4)) {
             System.out.println(player);
         }
-
+/*
         System.out.println("---Query-1-");
 
         QueryBuilder query = new QueryBuilder();
@@ -60,9 +61,10 @@ public class Main {
         for (Player player : stats.matches(m5)) {
             System.out.println( player );
         }
-
+*/
         System.out.println("---Query-2-");
 
+        QueryBuilder query = new QueryBuilder();
         Matcher m6 = query.playsIn("NYR").build();
  
         for (Player player : stats.matches(m6)) {
@@ -71,13 +73,29 @@ public class Main {
 
         System.out.println("---Query-3-");
 
-        QueryBuilder query1 = new QueryBuilder();
+        //QueryBuilder query = new QueryBuilder();
  
-        Matcher m7 = query1.playsIn("NYR")
+        Matcher m7 = query.playsIn("NYR")
                          .hasAtLeast(5, "goals")
                          .hasFewerThan(10, "goals").build();
  
         for (Player player : stats.matches(m7)) {
+            System.out.println( player );
+        }
+
+        System.out.println("---Query-4-");
+
+        // QueryBuilder query = new QueryBuilder();
+        Matcher m8 = query.oneOf(
+            query.playsIn("PHI")
+                .hasAtLeast(10, "assists")
+                .hasFewerThan(5, "goals").build(),
+
+            query.playsIn("EDM")
+                .hasAtLeast(40, "points").build()
+        ).build();
+
+        for (Player player : stats.matches(m8)) {
             System.out.println( player );
         }
     }

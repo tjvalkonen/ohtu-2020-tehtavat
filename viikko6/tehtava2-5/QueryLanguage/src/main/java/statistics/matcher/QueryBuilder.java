@@ -1,18 +1,22 @@
 package statistics.matcher;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class QueryBuilder {
     Matcher query;
 
     public QueryBuilder() {
-        this.query = new All();
+        query = new All();
     }
 
     public Matcher build() {
-        return this.query;
+        return query;
     }
 
     public QueryBuilder playsIn(String p) {
-        this.query = new And(query, new PlaysIn(p));
+        this.query = new PlaysIn(p);
         return this;
     }
 
@@ -25,4 +29,13 @@ public class QueryBuilder {
         this.query = new And(query, new HasFewerThan(value, category));
         return this;
     }
+
+    public QueryBuilder oneOf(Matcher... matchers) {
+        List<Matcher> list = new ArrayList<>();
+        list.add(this.query);
+        list.addAll(Arrays.asList(matchers));
+        this.query = new Or(list.toArray(new Matcher[list.size()]));
+        return this;
+   }
+
 }
