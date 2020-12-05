@@ -34,7 +34,7 @@ public class Main {
         }
         System.out.println("---M3---");
         Matcher m3 = new Or(new HasAtLeast(40, "goals"),
-                               new HasAtLeast(60, "assists")
+                            new HasAtLeast(60, "assists")
         );  
 
         for (Player player : stats.matches(m3)) {
@@ -42,7 +42,7 @@ public class Main {
         }
         System.out.println("---M4---");
         Matcher m4 = new And(new HasAtLeast(50, "points"),
-                         new Or( 
+                     new Or( 
                          new PlaysIn("NYR"),
                          new PlaysIn("NYI"),
                          new PlaysIn("BOS")
@@ -50,6 +50,35 @@ public class Main {
                        );
         for (Player player : stats.matches(m4)) {
             System.out.println(player);
+        }
+
+        System.out.println("---Query-1-");
+
+        QueryBuilder query = new QueryBuilder();
+        Matcher m5 = query.build();
+
+        for (Player player : stats.matches(m5)) {
+            System.out.println( player );
+        }
+
+        System.out.println("---Query-2-");
+
+        Matcher m6 = query.playsIn("NYR").build();
+ 
+        for (Player player : stats.matches(m6)) {
+            System.out.println( player );
+        }
+
+        System.out.println("---Query-3-");
+
+        QueryBuilder query1 = new QueryBuilder();
+ 
+        Matcher m7 = query1.playsIn("NYR")
+                         .hasAtLeast(5, "goals")
+                         .hasFewerThan(10, "goals").build();
+ 
+        for (Player player : stats.matches(m7)) {
+            System.out.println( player );
         }
     }
 }
