@@ -1,18 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.kivipaperisakset;
 
-// import java.util.Scanner;
-/**
- *
- * @author Tomas
- */
 public abstract class KiviPaperiSakset {
-    
-    // private static final Scanner scanner = new Scanner(System.in);
+
     public IO io;
     
     public KiviPaperiSakset (IO io) {
@@ -20,40 +9,39 @@ public abstract class KiviPaperiSakset {
     }
     
     public void pelaa() {
-        // io.print("Oikeesti eka rivi kun pelataan");
         Tuomari tuomari = new Tuomari(); 
 
-        //
-        // System.out.print("Ensimmäisen pelaajan siirto: ");
-        String ekanSiirto = ensimmaisenSiirto();
+        String ekanSiirto;
         
-        // System.out.print("Toisen pelaajan siirto: ");
-        
-        String tokanSiirto = toisenSiirto();
-    
-        
-        while (onkoOkSiirto(ekanSiirto) && onkoOkSiirto(tokanSiirto)) {
-            io.print("Tulostuuko whilessä?");
-            tuomari.kirjaaSiirto(ekanSiirto, tokanSiirto);
-            io.print(tuomari.toString());
-            io.print("");
+        String tokanSiirto;
 
+        while (true) {
             ekanSiirto = ensimmaisenSiirto();
-
-            tokanSiirto = toisenSiirto();
+            if(!onkoOkSiirto(ekanSiirto)){
+                break;
+            }
+            
+            tokanSiirto = toisenSiirto(ekanSiirto);
+            if(!onkoOkSiirto(tokanSiirto)){
+                break;
+            }
+            
+            tuomari.kirjaaSiirto(ekanSiirto, tokanSiirto);
+            io.println(tuomari.toString());
+            io.println("");
         }
         
-        io.print("");
-        io.print("Kiitos!");
-        io.print(tuomari.toString());
+        io.println("");
+        io.println("Kiitos!");
+        io.println(tuomari.toString());
     }
     
     protected String ensimmaisenSiirto() {
-        io.print("Ensimmäisen pelaajan siirto: ");
-        return io.nextLine(); //"" ; // scanner.nextLine();
+        io.println("Ensimmäisen pelaajan siirto: ");
+        return io.nextLine();
     }
     
-    abstract protected String toisenSiirto();
+    abstract protected String toisenSiirto(String ekanSiirto);
     
     protected static boolean onkoOkSiirto(String siirto) {
         return "k".equals(siirto) || "p".equals(siirto) || "s".equals(siirto);

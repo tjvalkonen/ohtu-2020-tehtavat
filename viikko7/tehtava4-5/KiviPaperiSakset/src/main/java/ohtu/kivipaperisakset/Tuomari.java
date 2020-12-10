@@ -28,7 +28,6 @@ public class Tuomari {
         if (eka.equals(toka)) {
             return true;
         }
-
         return false;
     }
 

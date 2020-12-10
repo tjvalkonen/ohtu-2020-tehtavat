@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.kivipaperisakset;
 
-/**
- *
- * @author Tomas
- */
 public class Peli {
     private IO io;
     public Pelitehdas pelit;
@@ -20,16 +11,19 @@ public class Peli {
     
     public void pelaa() {
         while (true) {
-            io.print("Valitse pelataanko");
-            io.print(" (a) ihmistä vastaan");
-            io.print(" (b) tekoälyä vastaan");
-            io.print(" (c) parannettua tekoälyä vastaan");
-            io.print("muilla valinnoilla lopetataan");
+            io.println("Valitse pelataanko");
+            io.println(" (a) ihmistä vastaan");
+            io.println(" (b) tekoälyä vastaan");
+            io.println(" (c) parannettua tekoälyä vastaan");
+            io.println("muilla valinnoilla lopetataan");
             
             String vastaus = io.nextLine();
- 
+            if (vastaus.equals("a") || vastaus.equals("b") || vastaus.equals("c")) {
+                io.println("peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s");                
+            } else {
+                break;
+            }
             pelit.hae(vastaus).pelaa();
         }
-    }
-    
+    }  
 }

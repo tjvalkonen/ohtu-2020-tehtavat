@@ -1,16 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.kivipaperisakset;
 
 import java.util.Scanner;
-
-/**
- *
- * @author Tomas
- */
 
 public class KonsoliIO implements IO {
     private static Scanner scanner;
@@ -23,7 +13,7 @@ public class KonsoliIO implements IO {
         return scanner.nextLine();
     }
     
-    public void print(String m) {
+    public void println(String m) {
         System.out.println(m);
     }
 }
